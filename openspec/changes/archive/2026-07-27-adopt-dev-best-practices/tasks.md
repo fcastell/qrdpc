@@ -52,8 +52,9 @@
       signing secrets, renames the APK to `qrdpc-vX.Y.Z.apk`, publishes a GitHub Release
       with English notes (`--generate-notes`, no installation-guide link) and the APK
       attached
-- [ ] 4.6 Tag a `v0.1.0` test release and confirm the signed APK is built and the GitHub
-      Release is published correctly
+- [x] 4.6 Tag a `v0.1.0` test release and confirm the signed APK is built and the GitHub
+      Release is published correctly (https://github.com/fcastell/qrdpc/releases/tag/v0.1.0,
+      `release` job green in 1m28s, `qrdpc-v0.1.0.apk` asset attached)
 
 ## 5. Claude Code workflow conventions
 
