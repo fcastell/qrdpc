@@ -1,6 +1,14 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- QrDPC's target package is whatever a scanned QR code names, decided at scan time,
+         not something that can be declared in advance via <queries> package/intent
+         filters — package-visibility filtering (Android 11+) would otherwise make
+         PackageManager.getApplicationInfo() report an installed target as not found. -->
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
