@@ -1,6 +1,6 @@
 ## Context
 
-`rms-mobile-app` (multi-module RawScan project, same maintainer, same core toolchain
+`rms-mobile-app` (multi-module Android project, same maintainer, same core toolchain
 versions) has, over several sessions, settled on: a documented Claude Code workflow
 (branch/PR discipline tied to OpenSpec archiving), detekt + spotless/ktlint for code
 quality, a lefthook pre-commit hook, a GitHub Actions CI pipeline, and a tag-triggered
@@ -77,7 +77,7 @@ QrDPC's differences from `rms-mobile-app`:
   git tag (`vX.Y.Z` → `versionCode = MAJOR*10000 + MINOR*100 + PATCH`).
 - **Release notes in English**: fixed text along the lines of "QrDPC test build." plus
   `--generate-notes`, no installation-guide link (see Non-Goals). APK asset renamed
-  `qrdpc-vX.Y.Z.apk`, matching the `rawscan-vX.Y.Z.apk` naming convention translated to
+  `qrdpc-vX.Y.Z.apk`, matching `rms-mobile-app`'s APK naming convention translated to
   this app's name.
 - **`verify-on-device` generalized**: keep the build → install → cold-start →
   screenshot → inspect loop and the "never conclude a UI task from `assemble`/`test`
@@ -85,7 +85,7 @@ QrDPC's differences from `rms-mobile-app`:
   unlocked, debug-enabled Android device (`adb devices -l` non-empty) is acceptable for
   QrDPC, since it has no fixed target hardware.
 - **`git-pr-workflow` and `session-wrapup` ported near-verbatim**, translated to English,
-  with `rawscan`/`com.danone.rawscan` references replaced by `qrdpc`/
+  with the source project's package/app references replaced by `qrdpc`/
   `io.github.fcastell.qrdpc`, and the French-specific commit-message/PR-body line replaced
   by "commit messages in English" (this repo's existing convention).
 

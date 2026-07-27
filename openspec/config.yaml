@@ -10,9 +10,9 @@ schema: spec-driven
 #     Domain: e-commerce platform
 context: |
   QrDPC (io.github.fcastell.qrdpc) is a public, community-facing Android app: a public
-  GitHub repo under the personal account fcastell, licensed Apache-2.0. Unlike sibling
-  Danone projects, everything here — code, comments, docs, commit messages, and all
-  OpenSpec artifacts — must be written in English.
+  GitHub repo under the personal account fcastell, licensed Apache-2.0. Everything here —
+  code, comments, docs, commit messages, and all OpenSpec artifacts — must be written in
+  English.
 
   Purpose: scan a QR code encoding an Android Managed Configuration (App Restrictions)
   bundle and apply it to a target app, most likely via the DELEGATION_APP_RESTRICTIONS
