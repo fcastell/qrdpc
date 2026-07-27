@@ -41,6 +41,18 @@ Before closing a session (or on request for a check-in/wrap-up): skill
 recurring patterns worth formalizing, verification that no decision from the session is
 lost.
 
+## Privacy
+
+This repo is public. It must never reference any private/internal project by name, or
+any identifier (e.g. a package name) tied to one — not in code, comments, docs, commit
+messages, PR titles/bodies, release notes, or OpenSpec artifacts. This is an ongoing
+constraint on all new content, not a one-time historical cleanup: a past scrub already
+had to be redone once after a later change reintroduced such a reference into an
+example/test value, which then propagated into a commit message, a PR body, and
+auto-generated release notes before being caught. When in doubt, use a generic
+placeholder (e.g. `com.example.target`, "a private sibling project") instead of a real
+name or identifier.
+
 ## Language
 
 Everything in this repo — code, comments, docs, commit messages, PR bodies, release

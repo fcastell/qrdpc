@@ -54,8 +54,10 @@ git/PR/archiving action on this repo, whether explicitly invoked or not.
       still-running CI runs on previous commits (`gh run cancel <id>`, found via
       `gh run list --branch <branch>`) rather than letting them run alongside the run for
       the latest commit.
-- [ ] Once green: merge (`gh pr merge <n> --squash --delete-branch`) without asking for
-      confirmation again, unless the user indicated they want to review first.
+- [ ] Once green (or, for a doc/openspec-only PR, once confirmed no checks were expected
+      to run): report status and ask the user for explicit confirmation before merging.
+      Do not auto-merge just because checks are green — always wait for a clear go-ahead,
+      then merge with `gh pr merge <n> --squash --delete-branch`.
 - [ ] After merge: `git checkout main && git pull --ff-only`, clean up the local branch if
       it's still around (`git branch -d <name>`).
 - [ ] Never `--force`/`--force-with-lease` on `main`, and no destructive merge/rebase
