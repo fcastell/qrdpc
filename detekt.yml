@@ -1,3 +1,6 @@
 naming:
   FunctionNaming:
     ignoreAnnotated: ["Composable"]
+style:
+  ReturnCount:
+    excludeGuardClauses: true

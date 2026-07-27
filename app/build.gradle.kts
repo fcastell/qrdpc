@@ -92,6 +92,8 @@ dependencies {
     implementation(libs.mlkit.barcode.scanning)
 
     testImplementation(libs.junit)
+    // Android's org.json is a stub in local unit tests; use the real implementation.
+    testImplementation(libs.json)
 }
 
 detekt {
