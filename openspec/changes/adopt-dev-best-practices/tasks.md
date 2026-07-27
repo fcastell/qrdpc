@@ -30,7 +30,9 @@
       with `paths-ignore` for `openspec/**`, `docs/**`, `**/*.md`
 - [x] 3.3 Generate a `GRADLE_ENCRYPTION_KEY` (`openssl rand -base64 32`) and register it as
       a GitHub Actions secret on `fcastell/qrdpc`
-- [ ] 3.4 Open a throwaway branch/PR and confirm the CI job passes end to end
+- [x] 3.4 Open a throwaway branch/PR and confirm the CI job passes end to end (verified on
+      this change's real PR, https://github.com/fcastell/qrdpc/pull/1, rather than a
+      separate disposable one — `android` job green in 4m25s, `release` correctly skipped)
 
 ## 4. Release signing and process
 
