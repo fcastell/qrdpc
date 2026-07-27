@@ -16,9 +16,14 @@ git/PR/archiving action on this repo, even without explicit invocation.
 ## CI
 
 - The `.github/workflows/ci.yml` workflow ignores changes that only touch `openspec/**`,
-  `docs/**`, or `**/*.md` files (`paths-ignore`) — don't be surprised by the absence of a
-  CI check on a PR that only contains doc/spec content.
+  `docs/**`, `**/*.md`, or `web/**` files (`paths-ignore`) — don't be surprised by the
+  absence of a CI check on a PR that only contains doc/spec or web-tool content.
 - The `release` job only triggers on a `v*.*.*` tag, never on a push to `main`.
+- Branch protection on `main` must never list a check as a required status check while
+  `paths-ignore` can skip that check's job entirely — GitHub treats a required check
+  that never reports any status as blocking merge, not as passing. This bit a doc-only
+  PR once already; if CI ever needs to be a hard merge gate, change `paths-ignore` and
+  the required-check config together, not one without the other.
 
 ## Releases
 
