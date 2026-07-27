@@ -10,7 +10,7 @@ and every pull request, with a pinned, cached, reproducible setup.
 A GitHub Actions workflow SHALL run on every push to `main` and on every pull request
 targeting `main`, executing `spotlessCheck`, `detekt`, `test`, `lint`, and `assemble` in
 that order (fastest checks first), and SHALL be skipped for changes that only touch
-`openspec/**`, `docs/**`, or `**/*.md`.
+`openspec/**`, `docs/**`, `**/*.md`, or `web/**`.
 
 #### Scenario: CI runs the full check sequence on a code change
 - **WHEN** a pull request modifies a file under `app/src/**`
@@ -21,6 +21,11 @@ that order (fastest checks first), and SHALL be skipped for changes that only to
 - **WHEN** a pull request only modifies files under `openspec/**`, `docs/**`, or matching
   `**/*.md`
 - **THEN** the CI workflow does not run for that push/PR
+
+#### Scenario: Web-tool-only changes don't trigger the Android CI job
+- **WHEN** a pull request only modifies files under `web/**`
+- **THEN** the Android CI workflow does not run for that push/PR (the web tool has its
+  own deploy workflow, defined by the `web-tool-hosting` capability)
 
 ### Requirement: Reproducible, cached CI environment
 CI SHALL use a pinned JDK 17 (Temurin), a pinned/commit-SHA-referenced Gradle setup action
