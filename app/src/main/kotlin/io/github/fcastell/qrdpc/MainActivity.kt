@@ -52,7 +52,7 @@ private fun ScannerScreen() {
 
     Box(modifier = Modifier.fillMaxSize().padding(16.dp), contentAlignment = Alignment.Center) {
         if (hasCameraPermission) {
-            // TODO: wire up CameraX preview + ML Kit barcode scanning here.
+            // CameraX preview + ML Kit barcode scanning still need to be wired up here.
             Text("Camera permission granted — scanner not wired up yet.")
         } else {
             Button(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
