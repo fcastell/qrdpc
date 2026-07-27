@@ -59,12 +59,12 @@
       scope for a real installed target package on the connected test device (grant via
       TestDPC if not already present) — granted by the user via TestDPC's UI, verified
       via `adb shell dumpsys device_policy` (`io.github.fcastell.qrdpc` →
-      `delegation-app-restrictions`); target package for testing is `com.danone.rawscan`
+      `delegation-app-restrictions`); target package for testing is `com.example.target`
       (already installed on the device)
 - [x] 5.2 Using the deployed `qr-config-generator` web tool, build a config covering all
       7 restriction types (including nested `bundle`/`bundle_array`) for that target
       package, generate its QR code — built on the live `fcastell.github.io/qrdpc` site
-      targeting `com.danone.rawscan`, 508 bytes
+      targeting `com.example.target`, 508 bytes
 - [x] 5.3 Install the updated QrDPC build, scan the generated QR on the connected
       device, confirm the preview matches, tap Apply, and verify the target package's
       restrictions actually changed (e.g. via `adb shell dumpsys device_policy` or the
@@ -85,14 +85,14 @@
       `com.example.doesnotexist`, got the exact expected error message with a Rescan
       action. This also surfaced a real bug fixed along the way: `PackageManager`
       package-visibility filtering (Android 11+) made even the genuinely-installed
-      `com.danone.rawscan` report as "not installed" without a `<queries>`/
+      `com.example.target` report as "not installed" without a `<queries>`/
       `QUERY_ALL_PACKAGES` declaration — added `QUERY_ALL_PACKAGES` (justified: target
       package is only known at scan time, so no static `<queries>` entry is possible),
       suppressed the expected lint warning with a comment explaining why
 - [x] 5.5 Verify the "delegation not granted" error path (temporarily revoke the
       delegation via TestDPC, scan a valid QR, confirm the specific error appears, then
       restore the delegation) — confirmed on-device: with delegation revoked (verified
-      absent via `dumpsys device_policy`), scanning a valid `com.danone.rawscan` QR and
+      absent via `dumpsys device_policy`), scanning a valid `com.example.target` QR and
       tapping Apply produced the exact expected message: "QrDPC hasn't been delegated
-      the APP_RESTRICTIONS scope for \"com.danone.rawscan\" by the active device policy
+      the APP_RESTRICTIONS scope for \"com.example.target\" by the active device policy
       controller."
