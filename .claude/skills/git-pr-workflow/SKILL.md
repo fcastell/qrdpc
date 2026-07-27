@@ -29,12 +29,15 @@ git/PR/archiving action on this repo, whether explicitly invoked or not.
   - If not yet archived: do NOT open the PR. Do not archive on your own initiative — wait
     for the user to explicitly ask, then do it on this same branch before (re)pushing and
     opening the PR.
-  - **Exception**: if a task in the change depends on the CI result of its own PR (e.g.
-    "confirm CI passes on the PR"), that task is structurally unverifiable before the PR
-    exists (`ci.yml` only triggers on PR/push to `main`/tag). In that specific case, the
-    order reverses: push the branch and open the PR first, wait for the CI result, THEN
-    archive and commit that task's real outcome (checked if green, fixed if red) — never
-    archive the change as complete while that outcome is still unknown.
+  - **Exception**: if a task in the change structurally requires the PR to already be
+    merged to `main` — depends on the CI result of its own PR (e.g. "confirm CI passes on
+    the PR"), needs to tag a release from `main`, or needs to confirm a deploy that only
+    runs on `main` (e.g. GitHub Pages) — that task is unverifiable before the PR exists or
+    is merged. In that case, the order reverses: push the branch and open the PR first,
+    get it merged, THEN archive and commit that task's real outcome (checked if it
+    succeeded, fixed if not) — never archive the change as complete while that outcome is
+    still unknown. Archiving itself still goes through its own branch + PR afterward, per
+    this same checklist.
 - [ ] The commit(s) have been made and pushed on the branch.
 - [ ] The PR body (`gh pr create --body`) summarizes the changes and the test plan, in
       English, consistent with the commits.
@@ -43,7 +46,9 @@ git/PR/archiving action on this repo, whether explicitly invoked or not.
 
 - [ ] Wait for all CI checks to pass (`gh pr checks <n>`), including when no check
       triggers at all (doc-only PR, see `paths-ignore` in `ci.yml` — that's expected, not
-      a blocker).
+      a blocker). Branch protection has no required status check configured specifically
+      so this case can't deadlock a merge — see `CLAUDE.md`'s CI section before adding one
+      back.
 - [ ] Never merge on a failing or still-running check.
 - [ ] After a new follow-up push on an already-open PR (fix, version bump...), cancel any
       still-running CI runs on previous commits (`gh run cancel <id>`, found via
