@@ -1,6 +1,8 @@
 // Ensure JSON payloads with non-ASCII characters (e.g. accented text in string
-// values) are encoded correctly rather than via the library's default byte mode.
-qrcode.stringToBytesFuncs["default"] = qrcode.stringToBytesFuncs["UTF-8"];
+// values) are encoded correctly. Reassigning stringToBytesFuncs['default'] alone is
+// NOT enough: qr8BitByte reads the already-bound `qrcode.stringToBytes` reference
+// (captured at library load time), so it must be reassigned directly.
+qrcode.stringToBytes = qrcode.stringToBytesFuncs["UTF-8"];
 
 const SCHEMA_VERSION = 1;
 
@@ -264,12 +266,18 @@ function generate() {
   }
 
   const json = JSON.stringify(result.payload);
-  const byteLength = utf8ByteLength(json);
+  // A leading UTF-8 BOM is not part of the JSON payload itself, but QR byte-mode
+  // segments carry no charset marker, and several real-world scanners (verified with
+  // zbar) fall back to a non-UTF-8 default charset for non-ASCII content without it,
+  // corrupting accented/non-Latin characters on decode. Readers that don't look for a
+  // BOM simply see JSON with a harmless leading whitespace-equivalent character.
+  const qrData = "﻿" + json;
+  const byteLength = utf8ByteLength(qrData);
 
   let qr;
   try {
     qr = qrcode(0, "M");
-    qr.addData(json);
+    qr.addData(qrData);
     qr.make();
   } catch (e) {
     showErrors([

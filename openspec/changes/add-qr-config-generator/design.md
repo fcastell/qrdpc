@@ -76,6 +76,21 @@ only needs to produce a format that decoder can later target.
   `web/vendor/` with its license kept alongside it, so the page has zero runtime network
   requests after the initial load — matching the "configuration data never leaves your
   device" property of the reference tool.
+- **QR byte-mode data is prefixed with a UTF-8 BOM (`EF BB BF`)** — discovered during
+  implementation testing (real decode with `zbar`, not just re-parsing our own JS
+  output): the vendored library emits raw byte-mode data with no ECI/charset marker, and
+  at least one real-world scanner falls back to a non-UTF-8 default charset for
+  non-ASCII bytes without a hint, corrupting accented characters on decode (verified:
+  `héllo wörld` came back as mangled CJK/katakana-range characters without the BOM,
+  decoded perfectly with it). The vendored library's own `stringToBytesFuncs['UTF-8']`
+  helper is also not wired up correctly by simply reassigning the `'default'` entry in
+  its map — `qr8BitByte` reads the already-bound `qrcode.stringToBytes` reference
+  captured at library load time, so `qrcode.stringToBytes` itself must be reassigned.
+  Both fixes together were verified with a real independent decode (not just re-running
+  our own encoder logic) across all 7 restriction types including nested
+  `bundle`/`bundle_array` values with non-ASCII content. This is now part of the
+  `qr-payload-format` contract, not just an implementation detail, since a future
+  Android-side decoder must also strip the BOM before parsing.
 - **Error correction level M, auto-sized QR version**: generate at ECC level M (~15%
   recovery — a reasonable balance of scan reliability vs. capacity for a phone camera)
   and let the library pick the smallest QR version (1–40) that fits the payload. If the
@@ -112,6 +127,15 @@ only needs to produce a format that decoder can later target.
 - [GitHub Pages custom build_type requires one-time API/repo-settings setup] → Must be
   enabled once via `gh api` (or the repo settings UI) before the first `pages.yml` run
   succeeds; documented as an explicit task, not assumed to happen automatically.
+- [Not every QR scanner respects a leading UTF-8 BOM in byte-mode data] → The BOM
+  convention is widely supported (it's the standard workaround for this exact QR
+  ecosystem ambiguity) and was verified against a real independent decoder, but it isn't
+  part of the formal QR/ISO spec. Restriction values are realistically ASCII-heavy
+  (package names, URLs, flags, numbers) so most payloads are unaffected either way,
+  since ASCII bytes are identical with or without this convention. Mitigation if a
+  future reader mishandles it: this is now a documented, versionable part of the
+  `qr-payload-format` contract (`schemaVersion`) rather than a silent implementation
+  detail.
 
 ## Migration Plan
 

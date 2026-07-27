@@ -56,11 +56,24 @@
 
 ## 7. End-to-end verification
 
-- [ ] 7.1 Open a PR with all of the above, confirm the Android CI job is skipped
-      (web-only change) and merge once ready
+- [x] 7.1 Open a PR with all of the above, confirm the Android CI job is skipped
+      (web-only change) and merge once ready — this PR itself also modifies
+      `.github/workflows/ci.yml` (not covered by `paths-ignore`), so the Android job
+      correctly ran rather than skipped here; it passed (spotlessCheck, detekt, test,
+      lint, assemble all green). Future web-only PRs that don't touch `ci.yml` will skip
+      it, per the `ci-pipeline` delta spec's scenario
 - [ ] 7.2 After merge, confirm `pages.yml` runs successfully and the site is live at
       `https://fcastell.github.io/qrdpc/`
-- [ ] 7.3 Build a sample restrictions config covering every type (including nested
+- [x] 7.3 Build a sample restrictions config covering every type (including nested
       `bundle`/`bundle_array`), generate its QR code, scan/decode it with any QR reader,
       and confirm the decoded JSON matches the `qr-payload-format` spec and the form's
-      input exactly
+      input exactly — done with `zbarimg` (real independent decoder, not just re-running
+      our own JS). First pass surfaced two real bugs with non-ASCII values (accented
+      characters came back corrupted): (1) the library's `stringToBytesFuncs['default']`
+      reassignment trick didn't work — fixed by reassigning `qrcode.stringToBytes`
+      directly; (2) even correct UTF-8 byte-mode data gets misread by at least one
+      real-world scanner without a charset hint — fixed by prefixing the payload with a
+      UTF-8 BOM before encoding, now documented as part of the `qr-payload-format`
+      contract. Re-verified after both fixes: all 7 types (including accented text in
+      `string`, `choice`, `multi-select`, and nested `bundle` values) decoded back
+      byte-for-byte correct
