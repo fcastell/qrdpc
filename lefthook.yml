@@ -1,0 +1,6 @@
+pre-commit:
+  commands:
+    spotless-apply:
+      glob: "*.{kt,kts}"
+      run: ./gradlew spotlessApply
+      stage_fixed: true
