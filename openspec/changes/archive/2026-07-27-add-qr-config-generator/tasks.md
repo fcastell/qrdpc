@@ -62,8 +62,9 @@
       correctly ran rather than skipped here; it passed (spotlessCheck, detekt, test,
       lint, assemble all green). Future web-only PRs that don't touch `ci.yml` will skip
       it, per the `ci-pipeline` delta spec's scenario
-- [ ] 7.2 After merge, confirm `pages.yml` runs successfully and the site is live at
-      `https://fcastell.github.io/qrdpc/`
+- [x] 7.2 After merge, confirm `pages.yml` runs successfully and the site is live at
+      `https://fcastell.github.io/qrdpc/` — deploy job succeeded, `curl` confirms 200 and
+      correct page content
 - [x] 7.3 Build a sample restrictions config covering every type (including nested
       `bundle`/`bundle_array`), generate its QR code, scan/decode it with any QR reader,
       and confirm the decoded JSON matches the `qr-payload-format` spec and the form's
