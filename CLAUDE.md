@@ -40,5 +40,5 @@ lost.
 
 Everything in this repo — code, comments, docs, commit messages, PR bodies, release
 notes, and all OpenSpec artifacts — is written in English. QrDPC is a public,
-community-facing project on the personal GitHub account `fcastell`; unlike sibling REDACTED-EMPLOYER
+community-facing project on the personal GitHub account `fcastell`; unlike some other
 projects, there is no French-language convention here.

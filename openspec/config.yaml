@@ -10,9 +10,9 @@ schema: spec-driven
 #     Domain: e-commerce platform
 context: |
   QrDPC (io.github.fcastell.qrdpc) is a public, community-facing Android app: a public
-  GitHub repo under the personal account fcastell, licensed Apache-2.0. Unlike sibling
-  REDACTED-EMPLOYER projects, everything here — code, comments, docs, commit messages, and all
-  OpenSpec artifacts — must be written in English.
+  GitHub repo under the personal account fcastell, licensed Apache-2.0. Everything here —
+  code, comments, docs, commit messages, and all OpenSpec artifacts — must be written in
+  English.
 
   Purpose: scan a QR code encoding an Android Managed Configuration (App Restrictions)
   bundle and apply it to a target app, most likely via the DELEGATION_APP_RESTRICTIONS
@@ -20,9 +20,9 @@ context: |
   device/profile owner (not yet confirmed as final).
 
   Stack: single :app Gradle module, Kotlin, Jetpack Compose (Material 3), CameraX + ML Kit
-  Barcode Scanning. Toolchain versions mirror the sibling a-sibling-project project (AGP
-  9.3.1, Kotlin 2.2.20, Gradle 9.6.1) since that combination is already verified working
-  in this environment. minSdk 26, compileSdk/targetSdk 36.
+  Barcode Scanning. Toolchain versions (AGP 9.3.1, Kotlin 2.2.20, Gradle 9.6.1) are pinned
+  to a combination already verified working in this environment. minSdk 26,
+  compileSdk/targetSdk 36.
 
 # Per-artifact rules (optional)
 # Add custom rules for specific artifacts.

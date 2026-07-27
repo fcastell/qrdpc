@@ -58,9 +58,9 @@
 
 ## 5. Claude Code workflow conventions
 
-- [x] 5.1 Add `.claude/skills/git-pr-workflow/SKILL.md`, translated/adapted from
-      `a-sibling-project` (English, `qrdpc`/`io.github.fcastell.qrdpc` references, commit
-      messages in English instead of French)
+- [x] 5.1 Add `.claude/skills/git-pr-workflow/SKILL.md`, translated/adapted from a sibling
+      project's equivalent skill (English, `qrdpc`/`io.github.fcastell.qrdpc` references,
+      commit messages in English instead of French)
 - [x] 5.2 Add `.claude/skills/session-wrapup/SKILL.md`, translated/adapted similarly
 - [x] 5.3 Add `.claude/skills/verify-on-device/SKILL.md`, generalized: no Zebra/Sunmi
       hardware constraint, any connected debug-enabled Android device accepted

@@ -2,8 +2,7 @@
 
 ## Purpose
 Defines QrDPC's GitHub Actions CI pipeline — the checks that run on every push to `main`
-and every pull request — ported from `a-sibling-project`'s `ci.yml` with the same pinned,
-cached, reproducible setup.
+and every pull request, with a pinned, cached, reproducible setup.
 
 ## Requirements
 

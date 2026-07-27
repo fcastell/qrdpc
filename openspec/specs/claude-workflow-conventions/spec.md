@@ -3,8 +3,8 @@
 ## Purpose
 Defines the Claude Code collaboration conventions for this repo: branch/PR discipline,
 commit rules, OpenSpec archiving timing relative to PRs, CI-gated merges, and the
-session close-out checklist — ported from the sibling `a-sibling-project` project and
-documented in `CLAUDE.md` and the `git-pr-workflow`/`session-wrapup` skills.
+session close-out checklist, documented in `CLAUDE.md` and the
+`git-pr-workflow`/`session-wrapup` skills.
 
 ## Requirements
 
