@@ -40,8 +40,8 @@ builds the QR codes QrDPC scans — fully offline, no server involved.
 ./gradlew :app:installDebug
 ```
 
-See [docs/installation.md](docs/installation.md) for installing on a device and
-setting up a DPC to delegate to QrDPC.
+See [docs/](docs/README.md) for installing on a device and setting up a DPC to
+delegate to QrDPC.
 
 ## Development setup
 
