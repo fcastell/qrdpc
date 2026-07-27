@@ -13,26 +13,26 @@ QrDPC](#3-delegate-the-app_restrictions-scope-to-qrdpc).
 
 ## Prerequisites
 
-- A device or emulator running Android 8.0 (API 26) or later.
-- `adb` (Android Platform Tools) installed, with the device connected and USB
-  debugging enabled (`adb devices` should list it) — see
-  [docs/adb-setup.md](adb-setup.md) if you don't have it set up yet.
-- The device has no existing accounts/profiles that would block a new managed
-  profile from being created (a freshly set-up or factory-reset device is simplest).
+- A device or emulator running Android 8.0 (API 26) or later, with Developer options
+  and USB debugging enabled — see [docs/enable-developer-mode.md](enable-developer-mode.md)
+  if you haven't done this yet.
+- `adb` (Android Platform Tools) installed, with the device connected and recognized
+  (`adb devices` should list it) — see [docs/adb-setup.md](adb-setup.md) if you don't
+  have it set up yet.
 
 ## 1. Install QrDPC
 
-From this repository:
-
-```bash
-./gradlew :app:installDebug
-```
-
-Or, from a release APK downloaded from the
+From a release APK downloaded from the
 [Releases page](https://github.com/fcastell/qrdpc/releases):
 
 ```bash
 adb install qrdpc-release.apk
+```
+
+Or, building from this repository:
+
+```bash
+./gradlew :app:installDebug
 ```
 
 ## 2. Install TestDPC and create a managed profile for it
@@ -51,7 +51,16 @@ cd android-testdpc
 adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
-Create a managed (work) profile owned by TestDPC:
+A managed profile is created *under* an existing user — this works even if that user
+already has accounts set up, since the managed profile runs alongside the personal
+profile rather than replacing it. On a device with a single (the default) user, that
+user's ID is `0`. If in doubt, or on a device with multiple users, confirm with:
+
+```bash
+adb shell pm list users
+```
+
+Create the managed (work) profile under that user:
 
 ```bash
 adb shell dpm create-managed-profile \
@@ -60,8 +69,9 @@ adb shell dpm create-managed-profile \
   com.afwsamples.testdpc/.DeviceAdminReceiver
 ```
 
-This prints something like `Success: created profile with user handle 10` — note that
-user handle. Start the new profile if it isn't already running:
+This prints something like `Success: created profile with user handle 10` — a new,
+different ID for the profile itself (not the parent user from `--user` above). Start
+the new profile if it isn't already running:
 
 ```bash
 adb shell am start-user 10
@@ -72,11 +82,17 @@ On the device, complete TestDPC's on-screen provisioning prompts for the new pro
 "TestDPC" icon.
 
 Both QrDPC and whichever app you intend to configure restrictions on need to exist
-inside that profile. Install them there explicitly with the `--user` flag (using the
-user handle from above):
+inside that profile. QrDPC is already installed on the device (step 1) — just enable
+the existing package for the new profile rather than reinstalling its APK:
 
 ```bash
-adb install --user 10 app/build/outputs/apk/debug/app-debug.apk   # from this repo's build/, QrDPC
+adb shell pm install-existing --user 10 io.github.fcastell.qrdpc
+```
+
+For the target app, do the same if it's already installed elsewhere on the device, or
+install its APK directly into the profile otherwise:
+
+```bash
 adb install --user 10 <path-to-target-app.apk>
 ```
 
