@@ -12,6 +12,7 @@ lifecycleRuntimeKtx = "2.9.4"
 cameraX = "1.4.2"
 mlkitBarcodeScanning = "17.3.0"
 junit = "4.13.2"
+json = "20260719"
 detekt = "1.23.8"
 spotless = "8.8.0"
 ktlint = "1.8.0"
@@ -35,6 +36,7 @@ camerax-view = { group = "androidx.camera", name = "camera-view", version.ref = 
 mlkit-barcode-scanning = { group = "com.google.mlkit", name = "barcode-scanning", version.ref = "mlkitBarcodeScanning" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+json = { group = "org.json", name = "json", version.ref = "json" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
