@@ -21,6 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - name: Cache-bust asset references
+        run: |
+          set -euo pipefail
+          SHA_SHORT="${GITHUB_SHA:0:7}"
+          sed -i \
+            -e "s#href=\"style.css\"#href=\"style.css?v=$SHA_SHORT\"#" \
+            -e "s#src=\"vendor/qrcode-generator/qrcode.js\"#src=\"vendor/qrcode-generator/qrcode.js?v=$SHA_SHORT\"#" \
+            -e "s#src=\"app.js\"#src=\"app.js?v=$SHA_SHORT\"#" \
+            web/index.html
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
