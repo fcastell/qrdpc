@@ -8,12 +8,14 @@ on:
       - "openspec/**"
       - "docs/**"
       - "**/*.md"
+      - "web/**"
   pull_request:
     branches: [main]
     paths-ignore:
       - "openspec/**"
       - "docs/**"
       - "**/*.md"
+      - "web/**"
 
 jobs:
   android:
