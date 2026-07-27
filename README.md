@@ -20,23 +20,28 @@ with this app, and it applies the values directly — repeatable, shareable, and
 
 ## Status
 
-Early scaffold. The camera permission flow is wired up; QR scanning (CameraX + ML Kit
-Barcode Scanning) and the actual mechanism for applying the decoded restrictions bundle
-(most likely via the `DELEGATION_APP_RESTRICTIONS` scope delegated by the active DPC) are
-not implemented yet.
+QR scanning (CameraX + ML Kit Barcode Scanning) and applying the decoded restrictions
+bundle via the delegated `DevicePolicyManager.setApplicationRestrictions` call are
+implemented. A companion [web-based QR config generator](https://fcastell.github.io/qrdpc/)
+builds the QR codes QrDPC scans — fully offline, no server involved.
 
 ## Requirements
 
 - Android 8.0 (API 26) or later.
-- The active Device Policy Controller must delegate the `DELEGATION_APP_RESTRICTIONS` scope
-  to this app's package (`io.github.fcastell.qrdpc`) for the target app you want to
-  configure — QrDPC does not act as its own DPC.
+- The active Device Policy Controller must delegate the `APP_RESTRICTIONS` scope to
+  this app's package (`io.github.fcastell.qrdpc`) for the target app you want to
+  configure — QrDPC does not act as its own DPC. See
+  [docs/installation.md](docs/installation.md) for a full setup guide, including
+  installing TestDPC and granting this delegation.
 
 ## Building
 
 ```bash
 ./gradlew :app:installDebug
 ```
+
+See [docs/installation.md](docs/installation.md) for installing on a device and
+setting up a DPC to delegate to QrDPC.
 
 ## Development setup
 
