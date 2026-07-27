@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QrDPC Config Generator</title>
+  <meta name="description" content="Build an Android Managed Configuration bundle and encode it as a QR code for QrDPC to scan — entirely offline, in your browser." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="page-header">
+    <h1>QrDPC Config Generator</h1>
+    <p>
+      Build a Managed Configuration (App Restrictions) bundle for a target Android app
+      and turn it into a QR code that
+      <a href="https://github.com/fcastell/qrdpc" target="_blank" rel="noopener">QrDPC</a>
+      can scan. Everything happens in your browser — no data is sent anywhere, and this
+      page works fully offline once loaded.
+    </p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>1. Target app</h2>
+      <label class="field">
+        <span>Package name</span>
+        <input
+          type="text"
+          id="package-name"
+          placeholder="com.example.target"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </label>
+    </section>
+
+    <section class="card">
+      <h2>2. Restrictions</h2>
+      <div id="restrictions-list" class="restrictions-list"></div>
+      <button type="button" id="add-restriction" class="btn btn-secondary">
+        + Add restriction
+      </button>
+    </section>
+
+    <section class="card">
+      <h2>3. Generate</h2>
+      <button type="button" id="generate" class="btn btn-primary">
+        Generate QR code
+      </button>
+      <div id="errors" class="errors" hidden></div>
+
+      <div id="output" class="output" hidden>
+        <div id="qr-container" class="qr-container"></div>
+        <p id="byte-count" class="byte-count"></p>
+        <div class="output-actions">
+          <button type="button" id="download-png" class="btn btn-secondary">
+            Download PNG
+          </button>
+          <button type="button" id="download-svg" class="btn btn-secondary">
+            Download SVG
+          </button>
+          <button type="button" id="copy-json" class="btn btn-secondary">
+            Copy JSON
+          </button>
+        </div>
+        <details class="json-preview">
+          <summary>Payload JSON</summary>
+          <pre id="json-preview-content"></pre>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <p>
+      Part of <a href="https://github.com/fcastell/qrdpc" target="_blank" rel="noopener">QrDPC</a>,
+      licensed Apache-2.0. QR code generation by
+      <a href="https://github.com/kazuhikoarase/qrcode-generator" target="_blank" rel="noopener">qrcode-generator</a>
+      (MIT), vendored — no third-party requests are made when you use this page.
+    </p>
+  </footer>
+
+  <template id="restriction-row-template">
+    <div class="restriction-row" data-row>
+      <div class="restriction-row-main">
+        <label class="field">
+          <span>Key</span>
+          <input type="text" data-field="key" autocomplete="off" spellcheck="false" />
+        </label>
+        <label class="field">
+          <span>Type</span>
+          <select data-field="type">
+            <option value="string">string</option>
+            <option value="bool">bool</option>
+            <option value="integer">integer</option>
+            <option value="choice">choice</option>
+            <option value="multi-select">multi-select</option>
+            <option value="bundle">bundle</option>
+            <option value="bundle_array">bundle_array</option>
+          </select>
+        </label>
+        <button type="button" class="btn btn-danger" data-action="remove">Remove</button>
+      </div>
+      <div class="restriction-row-value" data-value-container></div>
+      <p class="row-error" data-row-error hidden></p>
+    </div>
+  </template>
+
+  <script src="vendor/qrcode-generator/qrcode.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
