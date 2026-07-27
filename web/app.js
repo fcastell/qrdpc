@@ -5,6 +5,7 @@
 qrcode.stringToBytes = qrcode.stringToBytesFuncs["UTF-8"];
 
 const SCHEMA_VERSION = 1;
+const STORAGE_KEY = "qrdpc-generator-last-config";
 
 const restrictionsList = document.getElementById("restrictions-list");
 const addRestrictionBtn = document.getElementById("add-restriction");
@@ -24,16 +25,27 @@ let rowCounter = 0;
 let lastPayloadJson = null;
 let lastQr = null;
 
-function addRestrictionRow() {
+function addRestrictionRow(initial) {
   const fragment = rowTemplate.content.cloneNode(true);
   const row = fragment.querySelector("[data-row]");
   row.dataset.rowId = String(rowCounter++);
 
+  const keyInput = row.querySelector('[data-field="key"]');
   const typeSelect = row.querySelector('[data-field="type"]');
   const valueContainer = row.querySelector("[data-value-container]");
   const removeBtn = row.querySelector('[data-action="remove"]');
 
+  if (initial) {
+    keyInput.value = typeof initial.key === "string" ? initial.key : "";
+    if (typeof initial.type === "string") {
+      typeSelect.value = initial.type;
+    }
+  }
+
   renderValueControl(typeSelect.value, valueContainer);
+  if (initial) {
+    setRowValue(typeSelect.value, valueContainer, initial.value);
+  }
 
   typeSelect.addEventListener("change", () => {
     renderValueControl(typeSelect.value, valueContainer);
@@ -41,9 +53,20 @@ function addRestrictionRow() {
 
   removeBtn.addEventListener("click", () => {
     row.remove();
+    saveState();
   });
 
   restrictionsList.appendChild(fragment);
+}
+
+function setRowValue(type, container, value) {
+  const valueEl = container.querySelector('[data-field="value"]');
+  if (!valueEl) return;
+  if (type === "bool") {
+    valueEl.checked = Boolean(value);
+  } else {
+    valueEl.value = typeof value === "string" ? value : "";
+  }
 }
 
 function renderValueControl(type, container) {
@@ -255,6 +278,52 @@ function utf8ByteLength(str) {
   return new TextEncoder().encode(str).length;
 }
 
+function saveState() {
+  const rows = [];
+  restrictionsList.querySelectorAll("[data-row]").forEach((row) => {
+    const keyEl = row.querySelector('[data-field="key"]');
+    const typeEl = row.querySelector('[data-field="type"]');
+    const valueEl = row.querySelector('[data-field="value"]');
+    const type = typeEl.value;
+    const value = type === "bool" ? valueEl.checked : valueEl ? valueEl.value : "";
+    rows.push({ key: keyEl.value, type, value });
+  });
+
+  const state = { packageName: packageNameInput.value, rows };
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    // localStorage may be unavailable (private browsing quota, disabled storage, etc.);
+    // persistence is a convenience, not a requirement, so fail silently.
+  }
+}
+
+function loadState() {
+  let raw = null;
+  try {
+    raw = localStorage.getItem(STORAGE_KEY);
+  } catch (e) {
+    raw = null;
+  }
+
+  let state = null;
+  if (raw) {
+    try {
+      state = JSON.parse(raw);
+    } catch (e) {
+      state = null;
+    }
+  }
+
+  if (!state || typeof state !== "object" || !Array.isArray(state.rows) || state.rows.length === 0) {
+    addRestrictionRow();
+    return;
+  }
+
+  packageNameInput.value = typeof state.packageName === "string" ? state.packageName : "";
+  state.rows.forEach((row) => addRestrictionRow(row));
+}
+
 function generate() {
   clearErrors();
   outputEl.hidden = true;
@@ -335,10 +404,17 @@ async function copyJson() {
   }
 }
 
-addRestrictionBtn.addEventListener("click", addRestrictionRow);
+addRestrictionBtn.addEventListener("click", () => {
+  addRestrictionRow();
+  saveState();
+});
 generateBtn.addEventListener("click", generate);
 downloadPngBtn.addEventListener("click", downloadPng);
 downloadSvgBtn.addEventListener("click", downloadSvg);
 copyJsonBtn.addEventListener("click", copyJson);
 
-addRestrictionRow();
+packageNameInput.addEventListener("input", saveState);
+restrictionsList.addEventListener("input", saveState);
+restrictionsList.addEventListener("change", saveState);
+
+loadState();
