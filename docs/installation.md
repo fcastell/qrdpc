@@ -15,7 +15,8 @@ QrDPC](#3-delegate-the-app_restrictions-scope-to-qrdpc).
 
 - A device or emulator running Android 8.0 (API 26) or later.
 - `adb` (Android Platform Tools) installed, with the device connected and USB
-  debugging enabled (`adb devices` should list it).
+  debugging enabled (`adb devices` should list it) — see
+  [docs/adb-setup.md](adb-setup.md) if you don't have it set up yet.
 - The device has no existing accounts/profiles that would block a new managed
   profile from being created (a freshly set-up or factory-reset device is simplest).
 
@@ -37,7 +38,11 @@ adb install qrdpc-release.apk
 ## 2. Install TestDPC and create a managed profile for it
 
 TestDPC is Google's reference DPC app, useful for testing delegation without a real
-EMM. Build it from source and install it:
+EMM. If the device has Play Store access, install it from there:
+[TestDPC on Google Play](https://play.google.com/store/apps/details?id=com.afwsamples.testdpc).
+
+Otherwise (e.g. a rugged/enterprise device or emulator without Play Store), build it
+from source and sideload it:
 
 ```bash
 git clone https://github.com/googlesamples/android-testdpc.git
