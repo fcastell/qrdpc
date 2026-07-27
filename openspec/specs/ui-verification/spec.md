@@ -2,8 +2,8 @@
 
 ## Purpose
 Defines the expectation that UI implementation work on QrDPC is confirmed visually on a
-real Android device before being considered done, via the `verify-on-device` skill —
-ported from `rms-mobile-app` and generalized since QrDPC has no fixed target hardware.
+real Android device before being considered done, via the `verify-on-device` skill. QrDPC
+has no fixed target hardware, so verification is device-agnostic.
 
 ## Requirements
 

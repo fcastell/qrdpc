@@ -2,8 +2,8 @@
 
 ## Purpose
 Defines QrDPC's tag-triggered signed release process — how a `vX.Y.Z` tag turns into a
-signed APK published as a GitHub Release — ported from `rms-mobile-app` with a QrDPC-
-specific signing keystore and English release notes.
+signed APK published as a GitHub Release, using a QrDPC-specific signing keystore and
+English release notes.
 
 ## Requirements
 

@@ -2,8 +2,8 @@
 
 ## Purpose
 Defines the static analysis and formatting tooling enforced on QrDPC's Kotlin codebase —
-detekt, spotless/ktlint, and a lefthook pre-commit hook — ported from `rms-mobile-app` and
-adapted to QrDPC's single `:app` module.
+detekt, spotless/ktlint, and a lefthook pre-commit hook — adapted to QrDPC's single `:app`
+module.
 
 ## Requirements
 

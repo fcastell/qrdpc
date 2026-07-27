@@ -1,7 +1,7 @@
 ## Why
 
-The sibling project `rms-mobile-app` (same toolchain: AGP 9.3.1, Kotlin 2.2.20, same
-developer) has accumulated a set of working practices over several sessions — Claude Code
+A sibling Android project by the same maintainer (same toolchain: AGP 9.3.1, Kotlin 2.2.20)
+has accumulated a set of working practices over several sessions — Claude Code
 collaboration conventions, code quality tooling, CI, and a tag-based signed release
 process — that QrDPC does not have yet. QrDPC is now published on GitHub (see the archived
 `publish-to-github-fcastell` change) but still has no linting, no CI, and no reproducible
@@ -9,7 +9,7 @@ release process. Porting the proven parts of that setup now, while the codebase 
 small, is cheaper than retrofitting it later and keeps both projects consistent for their
 shared maintainer. Everything here is adapted to QrDPC's context: single `:app` module (no
 multi-module `core`/`feature` split), no dedicated target hardware, and all
-documentation/commits in English (unlike `rms-mobile-app`, which is French — that
+documentation/commits in English (unlike the sibling project, which is French — that
 convention is explicitly NOT ported).
 
 ## What Changes
@@ -27,7 +27,7 @@ convention is explicitly NOT ported).
   emulator-only verification for UI work).
 - Add code quality tooling: `detekt` (static analysis) and `spotless`/`ktlint` (formatting),
   with a root `detekt.yml` (ignore `FunctionNaming` for `@Composable`) and `.editorconfig`
-  entry, matching `rms-mobile-app`'s configuration.
+  entry.
 - Add a `lefthook` pre-commit hook running `spotlessApply` on staged Kotlin files.
 - Add a GitHub Actions CI workflow (`.github/workflows/ci.yml`): `spotlessCheck`, `detekt`,
   `test`, `lint`, `assemble`, triggered on push to `main` and on pull requests, with
@@ -38,8 +38,7 @@ convention is explicitly NOT ported).
 - Add a `release-app` skill documenting the tag/version-bump/publish procedure.
 - Add a conditional release `signingConfig` to `app/build.gradle.kts`: active only when
   `ANDROID_KEYSTORE_BASE64` (and related secrets) are present in the environment, so local
-  builds without those secrets remain unsigned and unaffected — mirrors
-  `rms-mobile-app`'s approach exactly.
+  builds without those secrets remain unsigned and unaffected.
 - **BREAKING (process, not code)**: once this change is archived, `git-pr-workflow` becomes
   the default expected flow for all future work on this repo — direct commits to `main`
   without a branch/PR are no longer the norm.
