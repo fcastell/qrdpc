@@ -11,6 +11,8 @@
 
 ## 2. Verify the live deploy
 
-- [ ] 2.1 After merge, once `pages.yml` has run for the merge commit, view the live
+- [x] 2.1 After merge, once `pages.yml` has run for the merge commit, view the live
       page's HTML source (or `curl`) and confirm `style.css`, `qrcode.js`, and `app.js`
-      are referenced with the expected `?v=` suffix
+      are referenced with the expected `?v=` suffix. Confirmed via
+      `curl https://fcastell.github.io/qrdpc/`: all three carry `?v=e3dde5f`, matching
+      the merge commit.
