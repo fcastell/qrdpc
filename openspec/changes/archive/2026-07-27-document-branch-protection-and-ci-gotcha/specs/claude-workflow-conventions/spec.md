@@ -1,24 +1,4 @@
-# claude-workflow-conventions Specification
-
-## Purpose
-Defines the Claude Code collaboration conventions for this repo: branch/PR discipline,
-commit rules, OpenSpec archiving timing relative to PRs, CI-gated merges, and the
-session close-out checklist, documented in `CLAUDE.md` and the
-`git-pr-workflow`/`session-wrapup` skills.
-
-## Requirements
-
-### Requirement: Documented default workflow
-The repository SHALL have a root `CLAUDE.md` that documents QrDPC-specific working
-conventions for Claude Code sessions and references the `git-pr-workflow` and
-`session-wrapup` skills rather than duplicating their content, so these conventions apply
-by default without needing to be restated each session.
-
-#### Scenario: CLAUDE.md exists and references skills
-- **WHEN** a Claude Code session starts in this repository
-- **THEN** `CLAUDE.md` is present at the repo root and points to
-  `.claude/skills/git-pr-workflow/SKILL.md` and
-  `.claude/skills/session-wrapup/SKILL.md` for the detailed procedures
+## MODIFIED Requirements
 
 ### Requirement: Branch and PR discipline
 All non-trivial work SHALL happen on a dedicated branch (never directly on `main`) and be
@@ -63,15 +43,7 @@ a required check that never reports any status as blocking merge rather than pas
 - **THEN** branch protection does not require that job's status, and the PR remains
   mergeable once other requirements (e.g. PR existence) are satisfied
 
-### Requirement: Session close-out checklist
-Before closing a session, or on request for a wrap-up, the `session-wrapup` skill SHALL be
-used to check git state, OpenSpec state, recurring patterns worth formalizing, and
-spec/code drift — without taking any corrective action without explicit user confirmation.
-
-#### Scenario: Wrap-up surfaces uncommitted or unpushed work
-- **WHEN** the `session-wrapup` skill runs and uncommitted changes or unpushed commits
-  exist on the current branch
-- **THEN** they are listed to the user rather than silently left out of the summary
+## ADDED Requirements
 
 ### Requirement: Branch protection state on main
 `main` SHALL have branch protection configured to block force pushes and branch
