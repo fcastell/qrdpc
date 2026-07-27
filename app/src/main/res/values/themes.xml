@@ -1,0 +1,3 @@
+<resources>
+    <style name="Theme.QrDPC" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
