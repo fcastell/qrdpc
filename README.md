@@ -38,6 +38,16 @@ not implemented yet.
 ./gradlew :app:installDebug
 ```
 
+## Development setup
+
+This repo uses [lefthook](https://github.com/evilmartians/lefthook) to auto-format staged
+Kotlin files before each commit. After cloning, install it once (e.g. `brew install
+lefthook` on macOS) and wire up the git hooks:
+
+```bash
+lefthook install
+```
+
 ## License
 
 Apache License 2.0 — see [LICENSE](LICENSE).
